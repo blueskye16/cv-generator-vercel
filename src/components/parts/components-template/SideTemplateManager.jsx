@@ -21,6 +21,7 @@ export default function SideTemplateManager() {
     loadProfile,
     deleteProfile,
     renameProfile,
+    hydrateTemplates,
   } = useCvStore();
   const { closeModal } = useModalStore();
 
@@ -80,6 +81,10 @@ export default function SideTemplateManager() {
       editInputRef.current.focus();
     }
   }, [editingId]);
+
+  useEffect(() => {
+    hydrateTemplates();
+  }, [hydrateTemplates]);
 
   const handleSave = () => {
     if (!newProfileName.trim()) {

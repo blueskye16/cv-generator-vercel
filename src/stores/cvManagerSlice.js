@@ -1,7 +1,9 @@
 import { nanoid } from "nanoid";
+import { getSavedTemplates, saveSavedTemplates } from "../utils/templateDb";
 
 export const createCvManagerSlice = (set, get) => ({
   savedProfiles: [],
+  templatesHydrated: false,
 
   saveAsNewProfile: (profileName) => {
     const currentData = get().cvData;
@@ -15,27 +17,45 @@ export const createCvManagerSlice = (set, get) => ({
       lastModified: new Date().toISOString(),
     };
 
-    set((state) => ({
-      savedProfiles: [...state.savedProfiles, newProfile],
-    }));
+    const updatedProfiles = [...get().savedProfiles, newProfile];
+    set({ savedProfiles: updatedProfiles });
+    void saveSavedTemplates(updatedProfiles);
   },
 
   updateProfile: (profileId) => {
     const currentData = get().cvData;
     const currentBio = get().biodata;
 
-    set((state) => ({
-      savedProfiles: state.savedProfiles.map((p) =>
-        p.id === profileId
-          ? {
-              ...p,
-              data: currentData,
-              biodata: currentBio,
-              lastModified: new Date().toISOString(),
-            }
-          : p,
-      ),
-    }));
+    const updatedProfiles = get().savedProfiles.map((profile) =>
+      profile.id === profileId
+        ? {
+            ...profile,
+            data: currentData,
+            biodata: currentBio,
+            lastModified: new Date().toISOString(),
+          }
+        : profile,
+    );
+
+    set({ savedProfiles: updatedProfiles });
+    void saveSavedTemplates(updatedProfiles);
+  },
+
+  hydrateTemplates: async () => {
+    if (get().templatesHydrated) return;
+
+    const storedTemplates = await getSavedTemplates();
+    const localTemplates = get().savedProfiles;
+
+    if (localTemplates.length > 0) {
+      if (!storedTemplates || storedTemplates.length === 0) {
+        await saveSavedTemplates(localTemplates);
+      }
+    } else if (storedTemplates && storedTemplates.length > 0) {
+      set({ savedProfiles: storedTemplates });
+    }
+
+    set({ templatesHydrated: true });
   },
 
   loadProfile: (profileId) => {
@@ -49,18 +69,23 @@ export const createCvManagerSlice = (set, get) => ({
     }
   },
 
-  renameProfile: (id, newName) =>
-    set((state) => ({
-      savedProfiles: state.savedProfiles.map((profile) =>
-        profile.id === id
-          ? { ...profile, name: newName, lastModified: Date.now() }
-          : profile,
-      ),
-    })),
+  renameProfile: (id, newName) => {
+    const updatedProfiles = get().savedProfiles.map((profile) =>
+      profile.id === id
+        ? { ...profile, name: newName, lastModified: Date.now() }
+        : profile,
+    );
+
+    set({ savedProfiles: updatedProfiles });
+    void saveSavedTemplates(updatedProfiles);
+  },
 
   deleteProfile: (profileId) => {
-    set((state) => ({
-      savedProfiles: state.savedProfiles.filter((p) => p.id !== profileId),
-    }));
+    const updatedProfiles = get().savedProfiles.filter(
+      (profile) => profile.id !== profileId,
+    );
+
+    set({ savedProfiles: updatedProfiles });
+    void saveSavedTemplates(updatedProfiles);
   },
 });
