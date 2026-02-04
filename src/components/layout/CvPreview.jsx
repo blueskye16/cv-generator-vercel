@@ -154,8 +154,11 @@ export default function CvPreview({
         }}
         onClick={handlePreviewClick}
       >
-        <div className="flex h-full w-full flex-col px-[12mm] py-[8mm]">
-          {/* HEADER BIODATA (Gunakan displayBio) */}
+        <div
+          className="flex h-full w-full flex-col px-[12mm] py-[8mm]"
+          style={{ gap: configCv.gapBetweenSection }}
+        >
+          {/* HEADER BIODATA */}
           <div className="mb-2 text-center">
             <h3 className="text-3xl font-semibold tracking-wide uppercase">
               {displayBio.name}
@@ -218,18 +221,12 @@ export default function CvPreview({
             </div>
           </div>
 
-          <div
-            className="flex flex-col"
-            style={{ gap: configCv.gapBetweenSection }}
-          >
-            {displayEntries("summary")}
-            {displayEntries("education")}
-            {displayEntries("workExperience")}
-            {displayEntries("msib")}
-            {displayEntries("organization")}
-            {displayEntries("certification")}
-            {displayEntries("skills")}
-          </div>
+          {Object.keys(displayData).map((key) => {
+            const content = displayEntries(key);
+            if (!content) return null;
+
+            return <div key={key}>{content}</div>;
+          })}
         </div>
       </div>
     </div>
