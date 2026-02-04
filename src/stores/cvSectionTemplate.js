@@ -5,26 +5,29 @@ export const createDescriptionTemplate = () => ({
 
 export const createNormalTemplate = () => ({
   id: "",
-  title: "",
-  subtitle: "",
-  date: "",
-  location: "",
-  description: "",
+  title: "Lorem ipsum dolor sit amet.",
+  subtitle: "Lorem ipsum dolor sit amet.",
+  date: "01/2025 - Present",
+  location: "City",
+  description: "Lorem ipsum dolor sit amet.",
   isVisible: "",
   linkUrl: "",
 });
 
 export const createSimpleTemplate = () => ({
   id: "",
-  title: "",
-  description: "",
+  title: "Lorem ipsum dolor sit amet.",
+  description: "Lorem ipsum dolor sit amet.",
+  date: "2025",
   isVisible: "",
   linkUrl: "",
 });
 
 export const createSimpleNoLinkTemplate = () => ({
   id: "",
-  title: "",
-  description: "",
+  title: "Lorem ipsum dolor sit amet.",
+  description: "Lorem, ipsum, dolor, sit amet.",
+  date: "",
   isVisible: "",
+  linkUrl: "",
 });

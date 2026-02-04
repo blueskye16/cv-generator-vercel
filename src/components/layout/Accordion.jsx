@@ -4,16 +4,27 @@ import { useState, useRef, useEffect } from "react";
 import AccordionItem from "./AccordionItem";
 import { useCvStore } from "@stores";
 import { useModalStore } from "@stores/useModalStore";
+import {
+  createNormalTemplate,
+  createSimpleTemplate,
+  createSimpleNoLinkTemplate,
+} from "@stores/cvSectionTemplate";
 
 export default function Accordion() {
   const [activeIndex, setActiveIndex] = useState(null);
   const [isSelectOpen, setIsSelectOpen] = useState(false);
+  const [isAddingMode, setIsAddingMode] = useState(false);
   const refMenu = useRef(null);
   const cvData = useCvStore((state) => state.cvData);
   const sectionKeys = Object.keys(cvData);
   const openModal = useModalStore((state) => state.openModal);
   const { updateSectionTemplate, addNewSection } = useCvStore();
   const resetAllData = useCvStore((state) => state.resetAllData);
+
+  // const handleOutsideAddSection = (index) => {
+  //   if (isAddingMode) setIsAddingMode(false);
+  //   setActiveIndex(index === activeIndex ? null : index);
+  // };
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -37,6 +48,7 @@ export default function Accordion() {
   };
 
   const handleAddSection = (e, template) => {
+    console.log("testing")
     e.stopPropagation();
     setIsSelectOpen(!isSelectOpen);
     const { sectionKey, id } = addNewSection(template);
@@ -105,6 +117,7 @@ export default function Accordion() {
             Reset All
           </button>
           <button
+            // onClick={(e) => handleAddSection(e)}
             onClick={() => setIsSelectOpen(!isSelectOpen)}
             className="flex w-full cursor-pointer items-center justify-center gap-2 rounded-md bg-green-400 p-2.5 hover:bg-green-500 dark:bg-green-800 dark:text-white dark:hover:bg-green-700"
           >

@@ -3,6 +3,7 @@ import { INITIAL_BIODATA, INITIAL_CV_DATA } from "./initialData";
 import {
   createDescriptionTemplate,
   createNormalTemplate,
+  createSimpleNoLinkTemplate,
   createSimpleTemplate,
 } from "./cvSectionTemplate";
 
@@ -111,6 +112,10 @@ export const createCvSlice = (set, get) => ({
         newEntry = createNormalTemplate();
       } else if (templateName === "description") {
         newEntry = createDescriptionTemplate();
+      } else if (templateName === "simple") {
+        newEntry = createSimpleTemplate();
+      } else if (templateName === "simple_no_link") {
+        newEntry = createSimpleNoLinkTemplate();
       } else {
         newEntry = createNormalTemplate();
       }
@@ -158,6 +163,7 @@ export const createCvSlice = (set, get) => ({
       const targetSection = state.cvData[sectionKey];
 
       const newEntries = targetSection.entries.filter((e) => e.id !== entryId);
+      
       if (newEntries.length === 0) {
         const newCvData = { ...state.cvData };
         delete newCvData[sectionKey];

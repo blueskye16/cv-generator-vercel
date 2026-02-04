@@ -9,6 +9,7 @@ export default function SimpleColumn({ sectionKey, entryId }) {
   const { cvData, updateEntryField } = useCvStore();
   const [toggleAttachLink, setToggleAttachLink] = useState(false);
   const popopverRef = useRef(null);
+  const section = cvData[sectionKey];
 
   const entry = cvData[sectionKey]?.entries.find((e) => e.id === entryId);
 
@@ -33,7 +34,7 @@ export default function SimpleColumn({ sectionKey, entryId }) {
   const hasLink = entry.linkUrl && entry.linkUrl.trim() !== "";
 
   return (
-    <section className="dark:bg-dark-second bg-white dark:text-white">
+    <section className="dark:bg-dark-second flex flex-col gap-2 bg-white dark:text-white">
       <div>
         <label>Title</label>
         <div className="relative" ref={popopverRef}>
@@ -43,7 +44,7 @@ export default function SimpleColumn({ sectionKey, entryId }) {
             value={entry.title || ""}
             onChange={(e) => handleFieldChange("title", e.target.value)}
           />
-          {cvData[sectionKey].template === "simple" && (
+          {section.template === "simple" && (
             <button
               onClick={() => setToggleAttachLink(!toggleAttachLink)}
               className={`absolute top-0 right-0 flex cursor-pointer items-center justify-center rounded-md border-2 p-2.5 transition-colors duration-200 ${
@@ -104,6 +105,17 @@ export default function SimpleColumn({ sectionKey, entryId }) {
           )}
         </div>
       </div>
+      {section.template !== "simple_no_link" && (
+      <div>
+        <label>Date</label>
+        <input
+          type="text"
+          className="w-full rounded-md bg-gray-100 p-2.5 align-middle focus:outline-hidden dark:bg-gray-700"
+          value={entry.date || ""}
+          onChange={(e) => handleFieldChange("date", e.target.value)}
+        />
+      </div>
+      )}
       <div>
         <label>Description</label>
         <Tiptap

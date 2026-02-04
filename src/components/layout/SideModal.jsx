@@ -6,6 +6,7 @@ import { useCvStore } from "@stores";
 import SideTemplateManager from "@parts/components-template/SideTemplateManager";
 import AiOptimizer from "@parts/components-template/AiOptimizer";
 import { useState } from "react";
+import { useEffect } from "react";
 
 export default function SideModal() {
   const [toggleEye, setToggleeye] = useState(false);
@@ -20,6 +21,7 @@ export default function SideModal() {
   const entryId = modalData?.entryId;
 
   const handleDelete = (e, sectionKey, entryId) => {
+    e.stopPropagation();
     if (window.confirm("Hapus entry ini?")) {
       deleteEntry(sectionKey, entryId);
       closeModal();
@@ -87,11 +89,17 @@ export default function SideModal() {
     FormToRender = templateMap[section.template];
   }
 
+  useEffect(() => {
+    const unsub = useCvStore.subscribe(
+      (state) => state
+    )
+  }, [])
+
   if (!section) return null;
 
   return (
     <div className="dark:bg-dark-second relative rounded-lg bg-white p-5 shadow-2xl">
-      <div className="flex items-center justify-between dark:text-white">
+      <div className="flex items-center justify-between dark:text-white mb-2">
         <h2 className="text-2xl font-bold">{title}</h2>
         {sectionKey !== "profile" && (
           <div className="flex gap-2">

@@ -8,14 +8,18 @@ import { GrEdit } from "react-icons/gr";
 import DOMPurify from "dompurify";
 
 export default function AccordionItem({ sectionKey, isOpen, onClick }) {
+  const [toggleEditTitle, setToggleEditTitle] = useState(false);
   const openModal = useModalStore((state) => state.openModal);
   const addEntry = useCvStore((state) => state.addEntry);
   const cvData = useCvStore((state) => state.cvData);
+
+  if (!cvData[sectionKey]) {
+    return null;
+  }
+
   const title = cvData[sectionKey].title;
 
-  const [toggleEditTitle, setToggleEditTitle] = useState(false);
   const { updateSectionTitle } = useCvStore();
-
   const toggleVisibility = useCvStore((state) => state.toggleEntryVisibility);
 
   const handleToggleEye = (e, sectionKey, entryId) => {
