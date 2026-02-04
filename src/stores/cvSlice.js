@@ -72,7 +72,8 @@ export const createCvSlice = (set, get) => ({
     const newId = nanoid();
     const currentCvData = get().cvData;
     const existingKeys = Object.keys(currentCvData);
-    const baseName = "customSection";
+
+    const baseName = "New Section";
     let uniqueName = baseName;
     let counter = 1;
     while (existingKeys.includes(uniqueName)) {
@@ -81,17 +82,31 @@ export const createCvSlice = (set, get) => ({
     }
 
     set((state) => {
-      let firstEntry = "normal"
-        ? createNormalTemplate()
-        : createSimpleTemplate();
+      let firstEntry;
+      switch (template) {
+        case "simple":
+          firstEntry = createSimpleTemplate();
+          break;
+        case "simple_no_link":
+          firstEntry = createSimpleNoLinkTemplate();
+          break;
+        case "description":
+          firstEntry = createDescriptionTemplate();
+          break;
+        case "normal":
+        default:
+          firstEntry = createNormalTemplate();
+          break;
+      }
+
       firstEntry.id = newId;
-      firstEntry.title = "Custom Section";
 
       const newSectionStructure = {
         title: "Custom Section",
         template: template,
         entries: [firstEntry],
       };
+
       return {
         cvData: {
           ...state.cvData,
@@ -108,16 +123,20 @@ export const createCvSlice = (set, get) => ({
       const templateName = state.cvData[sectionKey].template;
       let newEntry;
 
-      if (templateName === "normal") {
-        newEntry = createNormalTemplate();
-      } else if (templateName === "description") {
-        newEntry = createDescriptionTemplate();
-      } else if (templateName === "simple") {
-        newEntry = createSimpleTemplate();
-      } else if (templateName === "simple_no_link") {
-        newEntry = createSimpleNoLinkTemplate();
-      } else {
-        newEntry = createNormalTemplate();
+      switch (templateName) {
+        case "simple":
+          newEntry = createSimpleTemplate();
+          break;
+        case "simple_no_link":
+          newEntry = createSimpleNoLinkTemplate();
+          break;
+        case "description":
+          newEntry = createDescriptionTemplate();
+          break;
+        case "normal":
+        default:
+          newEntry = createNormalTemplate();
+          break;
       }
 
       newEntry.id = newId;
@@ -163,7 +182,7 @@ export const createCvSlice = (set, get) => ({
       const targetSection = state.cvData[sectionKey];
 
       const newEntries = targetSection.entries.filter((e) => e.id !== entryId);
-      
+
       if (newEntries.length === 0) {
         const newCvData = { ...state.cvData };
         delete newCvData[sectionKey];

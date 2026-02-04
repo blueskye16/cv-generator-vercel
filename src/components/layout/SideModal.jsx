@@ -90,16 +90,14 @@ export default function SideModal() {
   }
 
   useEffect(() => {
-    const unsub = useCvStore.subscribe(
-      (state) => state
-    )
-  }, [])
+    const unsub = useCvStore.subscribe((state) => state);
+  }, []);
 
   if (!section) return null;
 
   return (
     <div className="dark:bg-dark-second relative rounded-lg bg-white p-5 shadow-2xl">
-      <div className="flex items-center justify-between dark:text-white mb-2">
+      <div className="mb-2 flex items-center justify-between dark:text-white">
         <h2 className="text-2xl font-bold">{title}</h2>
         {sectionKey !== "profile" && (
           <div className="flex gap-2">
