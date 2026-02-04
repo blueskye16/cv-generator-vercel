@@ -1,20 +1,17 @@
 import { nanoid } from "nanoid";
 
 export const createCvManagerSlice = (set, get) => ({
-  
-  
   savedProfiles: [],
 
-  
   saveAsNewProfile: (profileName) => {
-    const currentData = get().cvData; 
-    const currentBio = get().biodata; 
+    const currentData = get().cvData;
+    const currentBio = get().biodata;
 
     const newProfile = {
       id: nanoid(),
       name: profileName || `CV Draft ${new Date().toLocaleDateString()}`,
       data: currentData,
-      biodata: currentBio, 
+      biodata: currentBio,
       lastModified: new Date().toISOString(),
     };
 
@@ -23,7 +20,6 @@ export const createCvManagerSlice = (set, get) => ({
     }));
   },
 
-  
   updateProfile: (profileId) => {
     const currentData = get().cvData;
     const currentBio = get().biodata;
@@ -42,15 +38,13 @@ export const createCvManagerSlice = (set, get) => ({
     }));
   },
 
-  
   loadProfile: (profileId) => {
     const targetProfile = get().savedProfiles.find((p) => p.id === profileId);
 
     if (targetProfile) {
-      
       set({
         cvData: targetProfile.data,
-        biodata: targetProfile.biodata, 
+        biodata: targetProfile.biodata,
       });
     }
   },
@@ -59,12 +53,11 @@ export const createCvManagerSlice = (set, get) => ({
     set((state) => ({
       savedProfiles: state.savedProfiles.map((profile) =>
         profile.id === id
-          ? { ...profile, name: newName, lastModified: Date.now() } 
+          ? { ...profile, name: newName, lastModified: Date.now() }
           : profile,
       ),
     })),
 
-  
   deleteProfile: (profileId) => {
     set((state) => ({
       savedProfiles: state.savedProfiles.filter((p) => p.id !== profileId),

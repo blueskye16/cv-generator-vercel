@@ -5,12 +5,10 @@ export default function useClickOutside(handler) {
 
   useEffect(() => {
     const listener = (event) => {
-      
       if (!ref.current || ref.current.contains(event.target)) {
         return;
       }
 
-      
       handler(event);
     };
 

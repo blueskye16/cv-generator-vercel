@@ -16,9 +16,8 @@ export default function Home() {
   const [isPreviewOpen, setPreviewOpen] = useState(false);
 
   const isPreviewMode = modalData?.type === "preview";
-  
+
   const isSideEditMode = isModalEntryOpen && !isPreviewMode;
-  
 
   const handleCvPreviewClick = (e) => {
     e.stopPropagation();

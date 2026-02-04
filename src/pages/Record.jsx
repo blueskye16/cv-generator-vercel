@@ -27,7 +27,6 @@ export default function Record() {
   } = useCvStore();
   const [searchParams] = useSearchParams();
 
-  
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [detailModal, setDetailModal] = useState({
     open: false,
@@ -36,10 +35,8 @@ export default function Record() {
     loading: false,
   });
 
-  
-  const [activeTab, setActiveTab] = useState("jobDesc"); 
+  const [activeTab, setActiveTab] = useState("jobDesc");
 
-  
   const [formData, setFormData] = useState({
     company: "",
     position: "",
@@ -49,7 +46,6 @@ export default function Record() {
     profileId: "",
   });
 
-  
   useEffect(() => {
     const linkedId = searchParams.get("id");
     if (linkedId) {
@@ -58,7 +54,6 @@ export default function Record() {
     }
   }, [searchParams, applications]);
 
-  
   const handleSubmit = async (e) => {
     e.preventDefault();
     const selectedProfile = savedProfiles.find(
@@ -84,7 +79,6 @@ export default function Record() {
   };
 
   const handleOpenDetail = async (meta) => {
-    
     setActiveTab("jobDesc");
     setDetailModal({ open: true, data: null, meta, loading: true });
     try {
@@ -109,7 +103,6 @@ export default function Record() {
     }
   };
 
-  
   const handleCopyToExcel = (app) => {
     const deepLink = `${window.location.origin}/record?id=${app.id}`;
     const excelLink = `=HYPERLINK("${deepLink}", "Open Detail")`;
@@ -123,7 +116,6 @@ export default function Record() {
   return (
     <div className="min-h-screen bg-gray-100 p-6 pt-24 text-gray-800 dark:bg-gray-900 dark:text-white">
       <div className="mx-auto max-w-6xl">
-        
         <div className="mb-8 flex items-center justify-between">
           <div>
             <h1 className="text-3xl font-bold">Job Tracker</h1>
@@ -139,10 +131,8 @@ export default function Record() {
           </button>
         </div>
 
-        
         {isFormOpen && (
           <div className="animate-in slide-in-from-top-4 mb-8 rounded-xl border border-gray-200 bg-white p-6 shadow-xl dark:border-gray-700 dark:bg-gray-800">
-            
             <h3 className="mb-4 text-xl font-bold text-gray-700 dark:text-gray-200">
               Input Data Lamaran Baru
             </h3>
@@ -230,7 +220,6 @@ export default function Record() {
           </div>
         )}
 
-        
         <div className="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm dark:border-gray-700 dark:bg-gray-800">
           <table className="w-full border-collapse text-left">
             <thead className="bg-gray-50 text-xs font-semibold text-gray-500 uppercase dark:bg-gray-700/50 dark:text-gray-400">
@@ -335,7 +324,6 @@ export default function Record() {
         </div>
       </div>
 
-      
       {detailModal.open && (
         <div
           className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm"
@@ -347,7 +335,6 @@ export default function Record() {
             className="animate-in zoom-in-95 flex h-[90vh] w-full max-w-4xl flex-col overflow-hidden rounded-xl bg-white shadow-2xl dark:bg-gray-800"
             onClick={(e) => e.stopPropagation()}
           >
-            
             <div className="flex items-start justify-between border-b border-gray-100 p-5 dark:border-gray-700">
               <div>
                 <h2 className="text-2xl font-bold">
@@ -368,7 +355,6 @@ export default function Record() {
               </button>
             </div>
 
-            
             <div className="flex gap-4 border-b border-gray-100 px-6 py-2 dark:border-gray-700">
               <button
                 onClick={() => setActiveTab("jobDesc")}
@@ -392,7 +378,6 @@ export default function Record() {
               </button>
             </div>
 
-            
             <div className="flex-1 overflow-hidden bg-gray-50 dark:bg-gray-900">
               {detailModal.loading ? (
                 <div className="flex h-full flex-col items-center justify-center gap-2 text-gray-400">
@@ -401,7 +386,6 @@ export default function Record() {
                 </div>
               ) : (
                 <div className="h-full w-full">
-                  
                   {activeTab === "jobDesc" && (
                     <div className="h-full overflow-y-auto p-6">
                       <div className="rounded-lg border border-gray-100 bg-white p-6 text-sm leading-relaxed whitespace-pre-line shadow-sm dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300">
@@ -411,11 +395,9 @@ export default function Record() {
                     </div>
                   )}
 
-                  
                   {activeTab === "cvSnapshot" && (
                     <div className="flex h-full w-full justify-center overflow-y-auto p-8">
                       {detailModal.data?.cvSnapshot ? (
-                        
                         <div className="relative min-h-[1200px] w-[210mm]">
                           <div className="origin-top scale-[0.85] shadow-2xl">
                             <CvPreview
@@ -438,7 +420,6 @@ export default function Record() {
               )}
             </div>
 
-            
             <div className="text-md flex items-center justify-between border-t border-gray-100 bg-white p-5 dark:border-gray-700 dark:bg-gray-800">
               <div className="text-xs text-gray-500">
                 <button className="flex cursor-default items-center gap-2 rounded-md bg-gray-100 px-3 py-1.5 text-gray-600 dark:bg-gray-700 dark:text-gray-300">

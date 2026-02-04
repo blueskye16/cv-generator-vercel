@@ -1,11 +1,11 @@
 import { GoogleGenAI } from "@google/genai";
 
 export default async function handler(req, res) {
-  // 1. Setup CORS (Penting untuk Localhost & Production)
+  
   const allowedOrigins = [
     "http://localhost:3000",
     "http://localhost:5173",
-    "https://cv-generator-anda.vercel.app", // Ganti domain ini nanti saat sudah publish
+    "https://vercel-cv-ats-generator.vercel.app/", 
   ];
 
   const origin = req.headers.origin;

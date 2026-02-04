@@ -8,8 +8,8 @@ import {
 
 export const createCvSlice = (set, get) => ({
   printRef: null,
-  aiDraftData: null, 
-  isAiPreviewMode: false, 
+  aiDraftData: null,
+  isAiPreviewMode: false,
 
   setAiDraft: (draftData) => {
     set({
@@ -18,14 +18,12 @@ export const createCvSlice = (set, get) => ({
     });
   },
 
-  
   toggleAiPreviewMode: () => {
     set((state) => ({
       isAiPreviewMode: !state.isAiPreviewMode,
     }));
   },
 
-  
   applyAiDraft: () => {
     const draft = get().aiDraftData;
     if (draft) {
@@ -37,7 +35,6 @@ export const createCvSlice = (set, get) => ({
     }
   },
 
-  
   discardAiDraft: () => {
     set({
       aiDraftData: null,
@@ -81,8 +78,7 @@ export const createCvSlice = (set, get) => ({
       uniqueName = `${baseName}-${counter}`;
       counter++;
     }
-    
-    
+
     set((state) => {
       let firstEntry = "normal"
         ? createNormalTemplate()
@@ -192,12 +188,11 @@ export const createCvSlice = (set, get) => ({
   toggleEntryVisibility: (sectionKey, entryId) =>
     set((state) => {
       const targetSection = state.cvData[sectionKey];
-      
+
       if (!targetSection) return state;
 
       const newEntries = targetSection.entries.map((entry) => {
         if (entry.id === entryId) {
-          
           const currentStatus = entry.isVisible !== false;
           return { ...entry, isVisible: !currentStatus };
         }
@@ -215,7 +210,6 @@ export const createCvSlice = (set, get) => ({
       };
     }),
 
-  
   updateSectionTitle: (sectionKey, newTitle) =>
     set((state) => ({
       cvData: {
@@ -229,12 +223,11 @@ export const createCvSlice = (set, get) => ({
 
   applyAiRevision: (newCvData) => {
     set((state) => ({
-      cvData: newCvData, 
+      cvData: newCvData,
     }));
   },
 
   resetAllData: () => {
-    
     set({
       cvData: INITIAL_CV_DATA,
       biodata: INITIAL_BIODATA,

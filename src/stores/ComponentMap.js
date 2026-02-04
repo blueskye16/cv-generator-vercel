@@ -4,13 +4,11 @@ import SimpleColumn from "@parts/components-template/SimpleColumn";
 import ProfileColumn from "@parts/components-template/ProfileColumn";
 import SideTemplateManager from "@parts/components-template/SideTemplateManager";
 
-
 import CvPreview from "@layout/CvPreview";
 import {
   EntryDescription,
   EntryNormal,
   EntrySimple,
-  
 } from "@layout/PreviewComponents";
 
 export const templateMap = {
@@ -20,7 +18,7 @@ export const templateMap = {
   simple: SimpleColumn,
   simple_no_link: SimpleColumn,
   templates: SideTemplateManager,
-  
+
   preview: CvPreview,
 };
 
@@ -29,5 +27,4 @@ export const previewTemplateMap = {
   simple: EntrySimple,
   simple_no_link: EntrySimple,
   description: EntryDescription,
-  
 };

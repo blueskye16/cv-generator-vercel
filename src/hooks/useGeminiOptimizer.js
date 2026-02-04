@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useCvStore } from "@stores"; 
+import { useCvStore } from "@stores";
 
 export const useGeminiOptimizer = () => {
   const [loading, setLoading] = useState(false);
@@ -15,7 +15,6 @@ export const useGeminiOptimizer = () => {
     setError(null);
 
     try {
-      
       const response = await fetch("/api/generate", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -35,11 +34,10 @@ export const useGeminiOptimizer = () => {
 
       const jsonResult = JSON.parse(textResponse);
 
-      
       const finalDraft = { ...currentCvData };
       Object.keys(jsonResult).forEach((key) => {
         if (finalDraft[key]) {
-          finalDraft[key] = jsonResult[key]; 
+          finalDraft[key] = jsonResult[key];
         }
       });
 
