@@ -1,0 +1,35 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap");
+@import "tailwindcss";
+
+@variant dark (&:where(.dark, .dark *));
+
+.v-border-gray {
+  @apply border border-gray-600;
+}
+
+.btn-dark {
+  @apply dark:bg-gray-700 dark:text-white dark:hover:bg-gray-900;
+}
+
+@theme {
+  --font-open-sans: "OpenSans", sans-serif;
+  --color-dark-first: #324865;
+  --color-dark-second: #1e2939;
+  --color-light-first: #6d72ab;
+  --color-light-second: #d4d6ff;
+  /* --color-light-first: #edeeff; */
+  --color-v-panel: #2f4865;
+  --color-v-panel-hover: #243a53;
+  --color-v-button: #495086;
+  --color-v-button-hover: #000536;
+}
+
+@utility no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}

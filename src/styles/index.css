@@ -1,0 +1,60 @@
+/* --- 1. RESET CSS untuk Konten Tiptap (PENTING!) --- */
+/* Gunakan selector yang lebih spesifik agar menembus shadow dom jika ada */
+#cv-paper p,
+#cv-paper ul,
+#cv-paper ol,
+#cv-paper li,
+#cv-paper h1,
+#cv-paper h2,
+#cv-paper h3 {
+  margin: 0;
+  padding: 0;
+  list-style-position: outside; /* Supaya bullet point rapi */
+}
+
+/* Kembalikan bullet point hanya untuk UL di dalam CV */
+#cv-paper ul {
+  padding-left: 1.2em; /* Beri jarak dikit untuk bullet */
+  list-style-type: disc;
+}
+
+#cv-paper li {
+  padding-left: 0;
+  margin-bottom: 0;
+}
+
+@media print {
+  @page {
+    size: A4;
+    margin: 0;
+  }
+
+  html,
+  body {
+    margin: 0;
+    padding: 0;
+    background: white;
+  }
+
+  /* SEMBUNYIKAN SEMUA */
+  body * {
+    visibility: hidden;
+  }
+
+  /* TAMPILKAN HANYA CV */
+  #cv-paper,
+  #cv-paper * {
+    visibility: visible;
+  }
+
+  #cv-paper {
+    width: 210mm;
+    min-height: 297mm;
+    margin: 0 auto;
+  }
+
+  * {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+}
